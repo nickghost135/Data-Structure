@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+   <meta charset="UTF-8">
+   <title>JS ??遊戲</title>
+   <style>
+       body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+       .hint { color: blue; font-size: 1.2em; margin: 20px; }
+   </style>
+</head>
+<body>
+
+
+   <h1>??遊戲</h1>
+   <p>請猜??</p>
+
+
+   <input type="number" id="myInput" placeholder="輸入數字...">
+   <button id="myBtn">送出</button>
+
+
+   <div id="resultText" class="hint">準備好就開始猜吧！</div>
+   <p>目前猜測次數：<span id="countText">0</span></p>
+
+
+   <script>
+       // --- 單元 A：變數宣告 ---
+       const answer = Math.floor(Math.random() * 100) + 1; // 答案
+       let attempts = 0; // 次數
+
+
+       // --- 單元 B：選取元素 (getElementById) ---
+       // 就像是把 HTML 的標籤「抓」到 JavaScript 的變數裡
+       const inputField = document.getElementById('myInput');
+       const btn = document.getElementById('myBtn');
+       const resultMsg = document.getElementById('resultText');
+       const countMsg = document.getElementById('countText');
+
+
+       // --- 單元 C：事件監聽 (Event Listener) ---
+       // 讓按鈕具備「聽命行事」的能力
+       btn.addEventListener('click', function() {
+          
+           // 1. 取得輸入的值並轉成數字
+           const userGuess = Number(inputField.value);
+          
+           // 2. 更新次數
+           attempts = attempts + 1;
+           countMsg.innerText = attempts;
+
+
+           // --- 單元 D：邏輯判斷 (if...else) ---
+           if (userGuess === answer) {
+               resultMsg.innerText = "⭐ 恭喜答對！數字就是 " + answer;
+               resultMsg.style.color = "green";
+               btn.disabled = true; // 鎖定按鈕
+           } else if (userGuess > answer) {
+               resultMsg.innerText = "太大了！再小一點。";
+               resultMsg.style.color = "red";
+           } else if (userGuess < answer) {
+               resultMsg.innerText = "太小了！再大一點。";
+               resultMsg.style.color = "orange";
+           }
+
+
+           // 清空輸入框以便下次輸入
+           inputField.value = "";
+           inputField.focus();
+       });
+   </script>
+
+
+</body>
+</html>
